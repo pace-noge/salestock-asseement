@@ -13,7 +13,7 @@ after successfully install all requirements start development server by running:
 ```
 python manage.py runserver
 ```
-login with:
+**login with**:
 
 username: nasa
 
@@ -46,4 +46,12 @@ python manage.py test functional_tests --liveserver=localhost:8000
 ```
 functional test will using selenium firefox webdriver, screenshot of the test will be saved inside functional_tests/screendumps
 
+**reference**:
 
+[Django](http://djangoproject.com/)
+
+[Django Rest Framework](http://www.django-rest-framework.org/)
+
+[Django Rest Testing](http://www.django-rest-framework.org/api-guide/testing/)
+
+[Selenium](http://selenium-python.readthedocs.io/)

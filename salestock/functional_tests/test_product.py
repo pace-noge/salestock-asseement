@@ -183,26 +183,26 @@ class ProductTest(FunctionalTest):
     # delete a product without login
     def test_delete_product_without_login(self):
         self.create_product()
-        self.assertEqual(product.objects.count(), 1)
+        self.assertEqual(Product.objects.count(), 1)
         url = reverse("product-detail", kwargs={'slug': 'test-product'})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        response.render()
-        self.assertEqual(product.objects.count(), 1)
+        self.assertEqual(Product.objects.count(), 1)
         self.browser.get(self.server_url+"/categories/?format=json")
         self.take_screenshot()
         result = json.loads(self.browser.find_element_by_tag_name("body").text)
         self.assertEqual(len(result), 1)
 
-    # def test_delete_product(self):
-    #     self.create_product()
-    #     self.assertEqual(product.objects.count(), 1)
-    #     url = reverse("product-detail", kwargs={'slug': 'test-product'})
-    #     self.client.force_authenticate(user=self.create_user())
-    #     response = self.client.delete(url)
-    #     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-    #     self.browser.get(self.server_url+"/categories/?format=json")
-    #     self.take_screenshot()
-    #     result = json.loads(self.browser.find_element_by_tag_name("body").text)
-    #     self.assertEqual(len(result), 0)
+    # delete product with login
+    def test_delete_product_with_login(self):
+        self.create_product()
+        self.assertEqual(Product.objects.count(), 1)
+        url = reverse("product-detail", kwargs={'slug': 'test-product'})
+        self.client.force_authenticate(user=self.create_user())
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.browser.get(self.server_url+"/categories/?format=json")
+        self.take_screenshot()
+        result = json.loads(self.browser.find_element_by_tag_name("body").text)
+        self.assertEqual(len(result), 0)
 

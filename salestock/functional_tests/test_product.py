@@ -160,7 +160,16 @@ class ProductTest(FunctionalTest):
         self.assertEqual(result[0]["title"], "product1")
 
 
-    # filter product based on price
+    # filter product based on price range
+    def test_filter_product_based_on_price_range(self):
+        self.create_multi_product()
+        self.browser.get(self.server_url+"/products/?format=json&min_price=500000&max_price=1000000")
+        self.take_screenshot()
+        result = json.loads(self.browser.find_element_by_tag_name("body").text)
+        self.assertEqual(len(result), 3)
+        self.assertEqual(result[0]["title"], "product1")
+        self.assertEqual(result[1]["title"], "product2")
+        self.assertEqual(result[2]["title"], "product3")
 
 
     # def test_delete_product(self):

@@ -82,7 +82,6 @@ class ProductTest(FunctionalTest):
 
 
     # create multiple product for filtering later
-
     def create_multi_product(self):
         category1 = Category.objects.create(
             title="category 1",
@@ -140,7 +139,17 @@ class ProductTest(FunctionalTest):
         result = json.loads(self.browser.find_element_by_tag_name("body").text)
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]["title"], "product1")
+
     # filter product based on color
+    def test_filter_product_based_on_color(self):
+        self.create_multi_product()
+        self.browser.get(self.server_url+"/products/?format=json&color=Black")
+        self.take_screenshot()
+        result = json.loads(self.browser.find_element_by_tag_name("body").text)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0]["title"], "product1")
+        self.assertEqual(result[1]["title"], "product3")
+
     # filter product based on price
 
 

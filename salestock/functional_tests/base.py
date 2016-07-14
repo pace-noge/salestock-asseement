@@ -20,7 +20,7 @@ class FunctionalTest(APILiveServerTestCase):
         if not os.path.exists(SCREEN_DUMP_LOCATION):
             os.makedirs(SCREEN_DUMP_LOCATION)
         self.server_url = SERVER_URL
-        self.browser = webdriver.Chrome()
+        self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(5)
         self.Category = Category
         self.Product = Product
@@ -54,6 +54,7 @@ class FunctionalTest(APILiveServerTestCase):
         category = self.create_category()
         product = Product.objects.create(
             title="Test Product",
+            slug="test-product",
             size="M",
             color="Black",
             price=199000,

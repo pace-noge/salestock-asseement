@@ -201,7 +201,7 @@ class ProductTest(FunctionalTest):
         self.client.force_authenticate(user=self.create_user())
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.browser.get(self.server_url+"/categories/?format=json")
+        self.browser.get(self.server_url+"/products/?format=json")
         self.take_screenshot()
         result = json.loads(self.browser.find_element_by_tag_name("body").text)
         self.assertEqual(len(result), 0)

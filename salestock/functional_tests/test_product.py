@@ -125,12 +125,21 @@ class ProductTest(FunctionalTest):
     # filter product based on size
     def test_filter_product_based_on_size(self):
         self.create_multi_product()
-        self.browser.get(self.server_url+"/products/category/?format=json&size=M")
+        self.browser.get(self.server_url+"/products/?format=json&size=M")
         self.take_screenshot()
         result = json.loads(self.browser.find_element_by_tag_name("body").text)
         self.assertEqual(result[0]["title"], "product1")
         self.assertEqual(result[1]["title"], "product3")
         self.assertEqual(len(result), 2)
+
+    # filter product based on category and size
+    def test_filter_product_based_on_category_and_size(self):
+        self.create_multi_product()
+        self.browser.get(self.server_url+"/products/category/category-1/?format=json&size=M")
+        self.take_screenshot()
+        result = json.loads(self.browser.find_element_by_tag_name("body").text)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["title"], "product1")
     # filter product based on color
     # filter product based on price
 

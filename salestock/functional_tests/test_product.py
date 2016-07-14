@@ -81,8 +81,9 @@ class ProductTest(FunctionalTest):
         self.assertEqual(len(result), 1)
 
 
-    # filter product with same category
-    def test_filter_product_based_on_same_category(self):
+    # create multiple product for filtering later
+
+    def create_multi_product(self):
         category1 = Category.objects.create(
             title="category 1",
             description="Category Satu")
@@ -109,13 +110,27 @@ class ProductTest(FunctionalTest):
             color="Black",
             price=750000,
             category=category2)
+
+
+    # filter product with same category
+    def test_filter_product_based_on_same_category(self):
+        self.create_multi_product()
         self.browser.get(self.server_url+"/products/category/category-1/?format=json")
         self.take_screenshot()
         result = json.loads(self.browser.find_element_by_tag_name("body").text)
         self.assertEqual(result[0]["title"], "product1")
         self.assertEqual(result[1]["title"], "product2")
         self.assertEqual(len(result), 2)
+
     # filter product based on size
+    def test_filter_product_based_on_size(self):
+        self.create_multi_product()
+        self.browser.get(self.server_url+"/products/category/?format=json&size=M")
+        self.take_screenshot()
+        result = json.loads(self.browser.find_element_by_tag_name("body").text)
+        self.assertEqual(result[0]["title"], "product1")
+        self.assertEqual(result[1]["title"], "product3")
+        self.assertEqual(len(result), 2)
     # filter product based on color
     # filter product based on price
 

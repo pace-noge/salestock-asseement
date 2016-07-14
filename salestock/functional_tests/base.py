@@ -56,7 +56,8 @@ class FunctionalTest(APILiveServerTestCase):
             title="Test Product",
             size="M",
             color="Black",
-            price=199000)
+            price=199000,
+            category=category)
         return product
 
     def create_user(self):
